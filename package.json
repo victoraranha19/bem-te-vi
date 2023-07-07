@@ -1,0 +1,25 @@
+{
+  "name": "bem-te-vi",
+  "displayName": "Bem-Te-Vi",
+  "description": "",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.79.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [{
+      "id": "bemtevi",
+      "aliases": ["Bem-Te-Vi", "bemtevi"],
+      "extensions": [".btv"],
+      "configuration": "./language-configuration.json"
+    }],
+    "grammars": [{
+      "language": "bemtevi",
+      "scopeName": "source.btv",
+      "path": "./syntaxes/bemtevi.tmLanguage.json"
+    }]
+  }
+}
