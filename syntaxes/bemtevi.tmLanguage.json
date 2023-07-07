@@ -11,10 +11,36 @@
 	],
 	"repository": {
 		"keywords": {
-			"patterns": [{
-				"name": "keyword.control.bemtevi",
-				"match": "\\b(if|while|for|return)\\b"
-			}]
+			"patterns": [
+				{
+					"name": "keyword.control.bemtevi",
+					"match": "\\b(se|entao|senao)\\b"
+				},
+				{
+					"match": "(==|<=|<)",
+					"name": "keyword.operator.comparison.bemtevi"
+				},
+				{
+					"match": "(=)",
+					"name": "keyword.operator.assignment.bemtevi"
+				},
+				{
+					"match": "(\\+|\\-|\\*|\\/|%)",
+					"name": "keyword.operator.arithmetic.bemtevi"
+				},
+				{
+					"match": "(!|e|ou)",
+					"name": "keyword.operator.logical.bemtevi"
+				}
+			]
+		},
+		"numbers": {
+			"patterns": [
+				{
+					"match": "(?x)\n (?<!\\$)\n (\n\\b\\d+?,\\B(?!,)\n | \n\\b\\d+?,[Ee][+-]?\\d+\\b\n | \n\\b\\d+,([Ee][+-]?\\d+)?\\b\n | \n\\b\\d+,\\d+([Ee][+-]?\\d+)?\\b\n | \n(?<!,)\\B,\\d+([Ee][+-]?\\d+)?\\b\n | \n\\b\\d+([Ee][+-]?\\d+)\\b\n | \n\\b\\d+([Ee][+-]?\\d+)?\\b\n | \n\\b(0|[1-9]\\d*)(?!,)\\b\n) \n(?!\\$)",
+					"name": "constant.numeric.decimal.bemtevi"
+				}
+			]
 		},
 		"strings": {
 			"name": "string.quoted.double.bemtevi",
