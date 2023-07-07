@@ -1,12 +1,10 @@
 {
 	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
 	"name": "Bem-Te-Vi",
+	"scopeName": "source.btv",
 	"patterns": [
 		{
-			"include": "#keywords"
-		},
-		{
-			"include": "#strings"
+			"include": "#code"
 		}
 	],
 	"repository": {
@@ -17,6 +15,49 @@
 				},
 				{
 					"include": "#object-types"
+				}
+			]
+		},
+		"code": {
+			"patterns": [
+				{
+					"include": "#comments"
+				},
+				{
+					"include": "#constants-and-special-vars"
+				},
+				{
+					"include": "#numbers"
+				},
+				{
+					"include": "#keywords"
+				},
+				{
+					"include": "#method-call"
+				},
+				{
+					"include": "#function-call"
+				},
+				{
+					"include": "#objects"
+				},
+				{
+					"include": "#strings"
+				},
+				{
+					"include": "#all-types"
+				},
+				{
+					"match": ",",
+					"name": "punctuation.separator.delimiter.bemtevi"
+				},
+				{
+					"match": "\\.",
+					"name": "punctuation.separator.period.bemtevi"
+				},
+				{
+					"match": ";",
+					"name": "punctuation.terminator.bemtevi"
 				}
 			]
 		},
@@ -191,12 +232,25 @@
 						{
 						}
 					]
+				},
+				{
+					"match": "\\b((?:[a-z][a-zA-Z_]*\\s*\\.\\s*)*[a-z][a-zA-Z_]*)\\b(?=\\s*[A-Za-z_\\n])",
+					"captures": {
+						"1": {
+							"patterns": [
+								{
+									"match": "[a-z][a-zA-Z_]*",
+									"name": "storage.type.bemtevi"
+								},
+								{
+									"match": "\\.",
+									"name": "punctuation.separator.period.bemtevi"
+								}
+							]
+						}
+					}
 				}
 			]
-		},
-		"primitive-types": {
-			"match": "\\b(Bool|Numero|Texto)\\b",
-			"name": "storage.type.primitive.bemtevi"
 		},
 		"objects": {
 			"match": "(?<![\\w])[a-z][a-zA-Z_]*(?=\\s*\\.\\s*[a-z][a-zA-Z_]*)",
@@ -220,17 +274,34 @@
 				}
 			]
 		},
+		"primitive-types": {
+			"match": "\\b(Bool|Numero|Texto)\\b",
+			"name": "storage.type.primitive.bemtevi"
+		},
 		"strings": {
-			"name": "string.quoted.double.bemtevi",
-			"begin": "\"",
-			"end": "\"",
 			"patterns": [
 				{
-					"name": "constant.character.escape.bemtevi",
-					"match": "\\\\."
+					"begin": "\"",
+					"beginCaptures": {
+						"0": {
+							"name": "punctuation.definition.string.begin.bemtevi"
+						}
+					},
+					"end": "\"",
+					"endCaptures": {
+						"0": {
+							"name": "punctuation.definition.string.end.bemtevi"
+						}
+					},
+					"name": "string.quoted.double.bemtevi",
+					"patterns": [
+						{
+							"match": "\\\\.",
+							"name": "constant.character.escape.bemtevi"
+						}
+					]
 				}
 			]
 		}
-	},
-	"scopeName": "source.btv"
+	}
 }
