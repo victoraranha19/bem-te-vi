@@ -153,18 +153,240 @@
 					"name": "punctuation.dec.btv"
 				},
 				{
+					"match": "(\\(|\\))",
+					"name": "punctuation.dec.btv"
+				},
+				{
 					"include": "#tipo"
 				},
 				{
 					"include": "#id"
 				},
 				{
-					"include": "#parametro"
+					"include": "#parametros"
 				},
 				{
 					"include": "#bloco"
 				}
 			]
+		},
+		"parametros": {
+			"patterns": [
+				{
+					"match": "(\\|)",
+					"name": "punctuation.parametros.btv"
+				},
+				{
+					"include": "#parametro"
+				}
+			]
+		},
+		"parametro": {
+			"patterns": [
+				{
+					"include": "#tipo"
+				},
+				{
+					"include": "#id"
+				},
+				{
+					"include": "#assinatura"
+				}
+			]
+		},
+		"assinatura": {
+			"patterns": [
+				{
+					"match": "(\\(|\\))",
+					"name": "punctuation.assinatura.btv"
+				},
+				{
+					"include": "#tipo"
+				},
+				{
+					"include": "#id"
+				},
+				{
+					"include": "#parametros_assinatura"
+				}
+			]
+		},
+		"parametros_assinatura": {
+			"patterns": [
+				{
+					"match": "(\\|)",
+					"name": "punctuation.parametros.btv"
+				},
+				{
+					"include": "#parametro_assinatura"
+				}
+			]
+		},
+		"parametro_assinatura": {
+			"patterns": [
+				{
+					"include": "#tipo"
+				},
+				{
+					"include": "#id"
+				},
+				{
+					"include": "#assinatura"
+				}
+			]
+		},
+		"bloco": {
+			"patterns": [
+				{
+					"match": "\\b(\\[|\\])\\b",
+					"name": "punctuation.bloco.btv"
+				},
+				{
+					"include": "#dec_cons"
+				},
+				{
+					"include": "#dec_obj"
+				},
+				{
+					"include": "#definicao"
+				},
+				{
+					"include": "#exp"
+				}
+			]
+		},
+		"definicao": {
+			"patterns": [
+				{
+					"match": "\\b(\\=|;)\\b",
+					"name": "punctuation.definicao.btv"
+				},
+				{
+					"include": "#id"
+				},
+				{
+					"include": "#atributo"
+				},
+				{
+					"include": "#exp"
+				}
+			]
+		},
+		"atributo": {
+			"patterns": [
+				{
+					"match": "\\b(\\.)\\b",
+					"name": "punctuation.atributo.btv"
+				},
+				{
+					"include": "#id"
+				}
+			]
+		},
+		"exp": {
+			"patterns": [
+				{
+					"match": "\\b(\\(|\\)|\\+|\\-|\\*|\\/|%|\\=\\=|\\<|\\<\\=|!)\\b",
+					"name": "punctuation.exp.btv"
+				},
+				{
+					"match": "\\b(verdade|falso|se|entao|senao|e|ou)\\b",
+					"name": "keyword.exp.btv"
+				},
+				{
+					"include": "#valor_numero"
+				},
+				{
+					"include": "#valor_texto"
+				},
+				{
+					"include": "#id"
+				},
+				{
+					"include": "#instancia"
+				},
+				{
+					"include": "#atributo"
+				},
+				{
+					"include": "#chamada"
+				},
+				{
+					"include": "#bloco"
+				}
+			]
+		},
+		"instancia": {
+			"patterns": [
+				{
+					"match": "\\b(\\[|\\])\\b",
+					"name": "punctuation.instancia.btv"
+				},
+				{
+					"include": "#id_molde"
+				},
+				{
+					"include": "#lista_inicializacao"
+				}
+			]
+		},
+		"lista_inicializacao": {
+			"patterns": [
+				{
+					"match": "\\b(\\|)\\b",
+					"name": "punctuation.lista.inicializacao.btv"
+				},
+				{
+					"include": "#inicializacao_objeto"
+				}
+			]
+		},
+		"inicializacao_objeto": {
+			"patterns": [
+				{
+					"match": "\\b(\\.|\\=)\\b",
+					"name": "punctuation.inicializacao.btv"
+				},
+				{
+					"match": "\\b(objeto)\\b",
+					"name": "keyword.inicializacao.btv"
+				},
+				{
+					"include": "#id"
+				},
+				{
+					"include": "#exp"
+				}
+			]
+		},
+		"chamada": {
+			"patterns": [
+				{
+					"match": "\\b(\\.|\\(|\\))\\b",
+					"name": "punctuation.chamada.btv"
+				},
+				{
+					"include": "#id"
+				},
+				{
+					"include": "#lista_exp"
+				}
+			]
+		},
+		"lista_exp": {
+			"patterns": [
+				{
+					"match": "\\b(\\|)\\b",
+					"name": "punctuation.lista.exp.btv"
+				},
+				{
+					"include": "#exp"
+				}
+			]
+		},
+		"valor_texto": {
+		},
+		"valor_numero": {
 		}
 	}
 }
