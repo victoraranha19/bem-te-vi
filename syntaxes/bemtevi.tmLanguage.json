@@ -4,6 +4,9 @@
 	"scopeName": "source.btv",
 	"patterns": [
 		{
+			"include": "#family"
+		},
+		{
 			"include": "#code"
 		}
 	],
@@ -24,6 +27,12 @@
 					"include": "#comments"
 				},
 				{
+					"include": "#molde"
+				},
+				{
+					"include": "#parens"
+				},
+				{
 					"include": "#constants-and-special-vars"
 				},
 				{
@@ -42,13 +51,16 @@
 					"include": "#objects"
 				},
 				{
+					"include": "#properties"
+				},
+				{
 					"include": "#strings"
 				},
 				{
 					"include": "#all-types"
 				},
 				{
-					"match": ",",
+					"match": "|",
 					"name": "punctuation.separator.delimiter.bemtevi"
 				},
 				{
@@ -124,6 +136,26 @@
 				}
 			]
 		},
+		"family": {
+			"patterns": [
+				{
+					"begin": "(?=\\s*\\b(?:molde)\\b\\s+(?:[A-Z][a-zA-Z]*)\\s+\\b(?:se\\s+passa\\s+por)\\b\\s+\\w+)",
+					"end": "\\s*(;|\\.)",
+					"endCaptures": {
+						"1": {
+							"name": "punctuation.family.terminator.bemtevi"
+						}
+					},
+					"name": "meta.family.bemtevi",
+					"patterns": [
+						{
+							"match": "\\b(molde|se|passa|por)\\b",
+							"name": "keyword.family.molde.bemtevi"
+						}
+					]
+				}
+			]
+		},
 		"function-call": {
 			"begin": "([a-z][a-zA-Z_]*)\\s*(\\()",
 			"beginCaptures": {
@@ -143,21 +175,22 @@
 			"name": "meta.function-call.bemtevi",
 			"patterns": [
 				{
+					"include": "#code"
 				}
 			]
 		},
 		"keywords": {
 			"patterns": [
 				{
-					"name": "keyword.control.bemtevi",
-					"match": "\\b(se|entao|senao)\\b"
+					"match": "\\b(se|entao|senao)\\b",
+					"name": "keyword.control.ternary.bemtevi"
 				},
 				{
 					"match": "(==|<=|<)",
 					"name": "keyword.operator.comparison.bemtevi"
 				},
 				{
-					"match": "(=)",
+					"match": "(<<|:|=)",
 					"name": "keyword.operator.assignment.bemtevi"
 				},
 				{
@@ -167,6 +200,18 @@
 				{
 					"match": "(!|e|ou)",
 					"name": "keyword.operator.logical.bemtevi"
+				}
+			]
+		},
+		"member-variables": {
+			"begin": "(?=constante|objeto|funcao)",
+			"end": "(?=\\=|;)",
+			"patterns": [
+				{
+					"include": "#variables"
+				},
+				{
+					"include": "#object-types"
 				}
 			]
 		},
@@ -192,13 +237,169 @@
 			"name": "meta.method-call.bemtevi",
 			"patterns": [
 				{
+					"include": "#code"
+				}
+			]
+		},
+		"methods": {
+			"begin": "(?=[\\w].*\\s+)(?=([^=/]|/(?!/))+\\()",
+			"end": "(])|(?=;)",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.section.method.end.bracket.curly.bemtevi"
+				}
+			},
+			"name": "meta.method.bemtevi",
+			"patterns": [
+				{
+					"include": "#storage-modifiers"
+				},
+				{
+					"begin": "(\\w+)\\s*(\\()",
+					"beginCaptures": {
+						"1": {
+							"name": "entity.name.function.bemtevi"
+						},
+						"2": {
+							"name": "punctuation.definition.parameters.begin.bracket.round.bemtevi"
+						}
+					},
+					"end": "\\)",
+					"endCaptures": {
+						"0": {
+							"name": "punctuation.definition.parameters.end.bracket.round.bemtevi"
+						}
+					},
+					"name": "meta.method.identifier.bemtevi",
+					"patterns": [
+						{
+							"include": "#parameters"
+						},
+						{
+							"include": "#parens"
+						},
+						{
+							"include": "#comments"
+						}
+					]
+				},
+				{
+					"begin": "(?=\\w.*\\s+\\w+\\s*\\()",
+					"end": "(?=\\s+\\w+\\s*\\()",
+					"name": "meta.method.return-type.bemtevi",
+					"patterns": [
+						{
+							"include": "#all-types"
+						},
+						{
+							"include": "#parens"
+						},
+						{
+							"include": "#comments"
+						}
+					]
+				},
+				{
+					"begin": "[",
+					"beginCaptures": {
+						"0": {
+							"name": "punctuation.section.method.begin.bracket.square.bemtevi"
+						}
+					},
+					"end": "(?=])",
+					"contentName": "meta.method.body.bemtevi",
+					"patterns": [
+						{
+							"include": "#code"
+						}
+					]
+				},
+				{
+					"include": "#comments"
+				}
+			]
+		},
+		"molde": {
+			"begin": "(?=\\w?[\\w\\s-]*\\b(?:molde)\\s+[\\w$]+)",
+			"end": "fim",
+			"endCaptures": {
+				"0": {
+					"name": "keyword.molde.end.bemtevi"
+				}
+			},
+			"name": "meta.molde.bemtevi",
+			"patterns": [
+				{
+					"include": "#comments"
+				},
+				{
+					"captures": {
+						"1": {
+							"name": "storage.modifier.bemtevi"
+						},
+						"2": {
+							"name": "entity.name.type.class.bemtevi"
+						}
+					},
+					"match": "(molde)\\s+([A-Z][a-zA-Z]*)",
+					"name": "meta.molde.identifier.bemtevi"
+				},
+				{
+					"begin": "contem",
+					"beginCaptures": {
+						"0": {
+							"name": "keyword.control.molde.contem.bemtevi"
+						}
+					},
+					"end": "(?=fim)",
+					"contentName": "meta.molde.body.bemtevi",
+					"patterns": [
+						{
+							"include": "#molde-body"
+						}
+					]
+				}
+			]
+		},
+		"molde-body": {
+			"patterns": [
+				{
+					"include": "#comments"
+				},
+				{
+					"include": "#molde"
+				},
+				{
+					"include": "#molde-fields-and-methods"
+				},
+				{
+					"include": "#member-variables"
+				},
+				{
+					"include": "#code"
+				}
+			]
+		},
+		"molde-fields-and-methods": {
+			"patterns": [
+				{
+					"begin": "(?=\\=)",
+					"end": "(?=;)",
+					"patterns": [
+						{
+							"include": "#code"
+						}
+					]
+				},
+				{
+					"include": "#methods"
 				}
 			]
 		},
 		"numbers": {
 			"patterns": [
 				{
-					"match": "(?x)\n(?<!\\$)\n(\n  \\b\\d+?,\\B(?!,)\n  |\n  \\b\\d+?,[Ee][+-]?\\d+\\b\n  |\n  \\b\\d+,([Ee][+-]?\\d+)?\\b\n  |\n  \\b\\d+,\\d+([Ee][+-]?\\d+)?\\b\n  |\n  (?<!,)\\B,\\d+([Ee][+-]?\\d+)?\\b\n  |\n  \\b\\d+([Ee][+-]?\\d+)\\b\n  |\n  \\b\\d+([Ee][+-]?\\d+)?\\b\n  |\n  \\b\\d+(?!,)\\b\n)\n(?!\\$)",
+					"match": "(?x)(?<!\\$) ( \\b\\d+?,\\B(?!,) | \\b\\d+?,[Ee][+-]?\\d+\\b | \\b\\d+,([Ee][+-]?\\d+)?\\b | \\b\\d+,\\d+([Ee][+-]?\\d+)?\\b | (?<!,)\\B,\\d+([Ee][+-]?\\d+)?\\b | \\b\\d+([Ee][+-]?\\d+)\\b | \\b\\d+([Ee][+-]?\\d+)?\\b | \\b\\d+(?!,)\\b ) (?!\\$)",
 					"name": "constant.numeric.decimal.bemtevi"
 				}
 			]
@@ -206,40 +407,12 @@
 		"object-types": {
 			"patterns": [
 				{
-					"begin": "\\b((?:[a-z][a-zA-Z_]*\\s*\\.\\s*)*)([a-z][a-zA-Z_]*)\\s*(?=\\[)",
-					"beginCaptures": {
-						"1": {
-							"patterns": [
-								{
-									"match": "[a-z][a-zA-Z_]*",
-									"name": "storage.type.bemtevi"
-								},
-								{
-									"match": "\\.",
-									"name": "punctuation.separator.period.bemtevi"
-								}
-							]
-						},
-						"2": {
-							"name": "storage.type.object.array.bemtevi"
-						}
-					},
-					"end": "(?!\\s*\\[)",
-					"patterns": [
-						{
-							"include": "#comments"
-						},
-						{
-						}
-					]
-				},
-				{
-					"match": "\\b((?:[a-z][a-zA-Z_]*\\s*\\.\\s*)*[a-z][a-zA-Z_]*)\\b(?=\\s*[A-Za-z_\\n])",
+					"match": "\\b((?:\\w+\\s*\\.\\s*)*\\w+)\\b(?=\\s*[A-Za-z\\n])",
 					"captures": {
 						"1": {
 							"patterns": [
 								{
-									"match": "[a-z][a-zA-Z_]*",
+									"match": "[A-Z][a-zA-Z]*",
 									"name": "storage.type.bemtevi"
 								},
 								{
@@ -249,6 +422,23 @@
 							]
 						}
 					}
+				}
+			]
+		},
+		"object-types-inherited": {
+			"patterns": [
+				{
+					"match": "\\b(?:[A-Z][a-zA-Z]*\\s*(\\.)\\s*)*[A-Z][a-zA-Z]\\b",
+					"name": "entity.other.inherited-class.bemtevi",
+					"captures": {
+						"1": {
+							"name": "punctuation.separator.period.bemtevi"
+						}
+					}
+				},
+				{
+					"match": "|",
+					"name": "punctuation.separator.delimiter.bemtevi"
 				}
 			]
 		},
@@ -274,9 +464,88 @@
 				}
 			]
 		},
+		"parens": {
+			"patterns": [
+				{
+					"begin": "\\(",
+					"beginCaptures": {
+						"0": {
+							"name": "punctuation.bracket.round.bemtevi"
+						}
+					},
+					"end": "\\)",
+					"endCaptures": {
+						"0": {
+							"name": "punctuation.bracket.round.bemtevi"
+						}
+					},
+					"patterns": [
+						{
+							"include": "#code"
+						}
+					]
+				},
+				{
+					"begin": "\\[",
+					"beginCaptures": {
+						"0": {
+							"name": "punctuation.bracket.square.bemtevi"
+						}
+					},
+					"end": "\\]",
+					"endCaptures": {
+						"0": {
+							"name": "punctuation.bracket.square.bemtevi"
+						}
+					},
+					"patterns": [
+						{
+							"include": "#code"
+						}
+					]
+				}
+			]
+		},
 		"primitive-types": {
 			"match": "\\b(Bool|Numero|Texto)\\b",
 			"name": "storage.type.primitive.bemtevi"
+		},
+		"properties": {
+			"patterns": [
+				{
+					"match": "(\\.)\\s*([a-z][a-zA-Z]*)(?=\\s*\\.\\s*[a-z][a-zA-Z]*)",
+					"captures": {
+						"1": {
+							"name": "punctuation.separator.period.bemtevi"
+						},
+						"2": {
+							"name": "variable.other.object.property.bemtevi"
+						}
+					}
+				},
+				{
+					"match": "(\\.)\\s*([a-z][a-zA-Z]*)",
+					"captures": {
+						"1": {
+							"name": "punctuation.separator.period.bemtevi"
+						},
+						"2": {
+							"name": "variable.other.object.property.bemtevi"
+						}
+					}
+				},
+				{
+					"match": "(\\.)\\s*([0-9][\\w$]*)",
+					"captures": {
+						"1": {
+							"name": "punctuation.separator.period.bemtevi"
+						},
+						"2": {
+							"name": "invalid.illegal.identifier.bemtevi"
+						}
+					}
+				}
+			]
 		},
 		"strings": {
 			"patterns": [
