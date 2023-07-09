@@ -5,58 +5,164 @@
 	"patterns": [
 		{
 			"include": "#comments"
+		},
+		{
+			"include": "#programa"
 		}
 	],
 	"repository": {
-		
-		"comments": {
+		"id_molde": {
+			"match": "\\b(?<=molde|se\\s+passa\\s+por)\\s+[A-Z][a-zA-Z]*(?=\\s+(se|contem)|\\s*(;|\\.))",
+			"name": "entity.name.type.id.molde.btv"
+		},
+		"id": {
+			"match": "\\b[a-z][a-zA-Z]*(?=\\s*(;|\\())",
+			"name": "entity.name.type.id.btv"
+		},
+		"tipo_primitivo": {
+			"match": "\\b(Bool|Numero|Texto)\\b",
+			"name": "keyword.tipo.primitivo.btv"
+		},
+		"programa": {
 			"patterns": [
 				{
-					"captures": {
-						"0": {
-							"name": "punctuation.definition.comment.bemtevi"
-						}
-					},
-					"match": "{}",
-					"name": "comment.block.empty.bemtevi"
+					"include": "#familia"
 				},
 				{
-					"include": "#comments-inline"
+					"include": "#def_molde"
 				}
 			]
 		},
-		"comments-inline": {
+		"familia": {
 			"patterns": [
 				{
-					"begin": "{",
-					"captures": {
-						"0": {
-							"name": "punctuation.definition.comment.bemtevi"
-						}
-					},
-					"end": "}",
-					"name": "comment.block.bemtevi"
+					"match": "(;|\\.)",
+					"name": "punctuation.familia.btv"
 				},
 				{
-					"begin": "(^[ \\t]+)?(?=\\-\\-)",
-					"beginCaptures": {
-						"1": {
-							"name": "punctuation.whitespace.comment.leading.bemtevi"
-						}
-					},
-					"end": "(?!\\G)",
-					"patterns": [
-						{
-							"begin": "\\-\\-",
-							"beginCaptures": {
-								"0": {
-									"name": "punctuation.definition.comment.bemtevi"
-								}
-							},
-							"end": "\\n",
-							"name": "comment.line.double-hyphen.bemtevi"
-						}
-					]
+					"include": "#relacao"
+				}
+			]
+		},
+		"relacao": {
+			"patterns": [
+				{
+					"match": "\\b(molde|se\\s+passa\\s+por)\\b",
+					"name": "keyword.relacao.btv"
+				},
+				{
+					"include": "#id_molde"
+				}
+			]
+		},
+		"def_molde": {
+			"patterns": [
+				{
+					"match": "\\b(molde|contem|fim)\\b",
+					"name": "keyword.def.molde.btv"
+				},
+				{
+					"include": "#id_molde"
+				},
+				{
+					"include": "#atributos"
+				},
+				{
+					"include": "#metodos"
+				}
+			]
+		},
+		"atributos": {
+			"patterns": [
+				{
+					"include": "#dec_cons"
+				},
+				{
+					"include": "#dec_obj"
+				}
+			]
+		},
+		"metodos": {
+			"patterns": [
+				{
+					"include": "#dec_funcao"
+				}
+			]
+		},
+		"dec_cons": {
+			"patterns": [
+				{
+					"match": "\\b(constante)\\b",
+					"name": "keyword.dec.molde.btv"
+				},
+				{
+					"match": "(:|;)",
+					"name": "punctuation.dec.btv"
+				},
+				{
+					"include": "#tipo_primitivo"
+				},
+				{
+					"include": "#id"
+				}
+			]
+		},
+		"dec_obj": {
+			"patterns": [
+				{
+					"match": "\\b(objeto)\\b",
+					"name": "keyword.dec.molde.btv"
+				},
+				{
+					"match": "(:|;)",
+					"name": "punctuation.dec.btv"
+				},
+				{
+					"include": "#tipo_molde"
+				},
+				{
+					"include": "#id"
+				}
+			]
+		},
+		"tipo_molde": {
+			"patterns": [
+				{
+					"include": "#id_molde"
+				}
+			]
+		},
+		"tipo": {
+			"patterns": [
+				{
+					"include": "#tipo_molde"
+				},
+				{
+					"include": "#tipo_primitivo"
+				}
+			]
+		},
+		"dec_funcao": {
+			"patterns": [
+				{
+					"match": "\\b(funcao)\\b",
+					"name": "keyword.dec.molde.btv"
+				},
+				{
+					"match": "(>>|:|;)",
+					"name": "punctuation.dec.btv"
+				},
+				{
+					"include": "#tipo"
+				},
+				{
+					"include": "#id"
+				},
+				{
+					"include": "#parametro"
+				},
+				{
+					"include": "#bloco"
 				}
 			]
 		}
