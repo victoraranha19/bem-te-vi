@@ -11,14 +11,6 @@
 		}
 	],
 	"repository": {
-		"id_molde": {
-			"match": "\\b(?<=molde|se\\s+passa\\s+por)\\s+[A-Z][a-zA-Z]*(?=\\s+(se|contem)|\\s*(;|\\.))",
-			"name": "entity.name.type.id.molde.btv"
-		},
-		"id": {
-			"match": "\\b[a-z][a-zA-Z]*(?=\\s*(;|\\())",
-			"name": "entity.name.type.id.btv"
-		},
 		"tipo_primitivo": {
 			"match": "\\b(Bool|Numero|Texto)\\b",
 			"name": "keyword.tipo.primitivo.btv"
@@ -160,13 +152,13 @@
 					"include": "#tipo"
 				},
 				{
-					"include": "#id"
-				},
-				{
 					"include": "#parametros"
 				},
 				{
 					"include": "#bloco"
+				},
+				{
+					"include": "#id"
 				}
 			]
 		},
@@ -187,10 +179,10 @@
 					"include": "#tipo"
 				},
 				{
-					"include": "#id"
+					"include": "#assinatura"
 				},
 				{
-					"include": "#assinatura"
+					"include": "#id"
 				}
 			]
 		},
@@ -204,10 +196,10 @@
 					"include": "#tipo"
 				},
 				{
-					"include": "#id"
+					"include": "#parametros_assinatura"
 				},
 				{
-					"include": "#parametros_assinatura"
+					"include": "#id"
 				}
 			]
 		},
@@ -228,10 +220,10 @@
 					"include": "#tipo"
 				},
 				{
-					"include": "#id"
+					"include": "#assinatura"
 				},
 				{
-					"include": "#assinatura"
+					"include": "#id"
 				}
 			]
 		},
@@ -262,10 +254,10 @@
 					"name": "punctuation.definicao.btv"
 				},
 				{
-					"include": "#id"
+					"include": "#atributo"
 				},
 				{
-					"include": "#atributo"
+					"include": "#id"
 				},
 				{
 					"include": "#exp"
@@ -294,6 +286,18 @@
 					"name": "keyword.exp.btv"
 				},
 				{
+					"include": "#bloco"
+				},
+				{
+					"include": "#instancia"
+				},
+				{
+					"include": "#chamada"
+				},
+				{
+					"include": "#atributo"
+				},
+				{
 					"include": "#valor_numero"
 				},
 				{
@@ -301,18 +305,6 @@
 				},
 				{
 					"include": "#id"
-				},
-				{
-					"include": "#instancia"
-				},
-				{
-					"include": "#atributo"
-				},
-				{
-					"include": "#chamada"
-				},
-				{
-					"include": "#bloco"
 				}
 			]
 		},
@@ -323,10 +315,10 @@
 					"name": "punctuation.instancia.btv"
 				},
 				{
-					"include": "#id_molde"
+					"include": "#lista_inicializacao"
 				},
 				{
-					"include": "#lista_inicializacao"
+					"include": "#id_molde"
 				}
 			]
 		},
@@ -352,10 +344,10 @@
 					"name": "keyword.inicializacao.btv"
 				},
 				{
-					"include": "#id"
+					"include": "#exp"
 				},
 				{
-					"include": "#exp"
+					"include": "#id"
 				}
 			]
 		},
@@ -366,10 +358,10 @@
 					"name": "punctuation.chamada.btv"
 				},
 				{
-					"include": "#id"
+					"include": "#lista_exp"
 				},
 				{
-					"include": "#lista_exp"
+					"include": "#id"
 				}
 			]
 		},
@@ -385,8 +377,41 @@
 			]
 		},
 		"valor_texto": {
+			"patterns": [
+				{
+					"begin": "\"",
+					"beginCaptures": {
+						"0": {
+							"name": "punctuation.definition.string.begin.btv"
+						}
+					},
+					"end": "\"",
+					"endCaptures": {
+						"0": {
+							"name": "punctuation.definition.string.end.btv"
+						}
+					},
+					"name": "string.quoted.double.btv",
+					"patterns": [
+						{
+							"match": "\\\\.",
+							"name": "constant.character.escape.btv"
+						}
+					]
+				}
+			]
 		},
 		"valor_numero": {
+			"match": "(?x)(?<!\\$) ( \\b\\d+?,\\B(?!,) | \\b\\d+?,[Ee][+-]?\\d+\\b | \\b\\d+,([Ee][+-]?\\d+)?\\b | \\b\\d+,\\d+([Ee][+-]?\\d+)?\\b | (?<!,)\\B,\\d+([Ee][+-]?\\d+)?\\b | \\b\\d+([Ee][+-]?\\d+)\\b | \\b\\d+([Ee][+-]?\\d+)?\\b | \\b\\d+(?!,)\\b ) (?!\\$)",
+			"name": "constant.numeric.decimal.btv"
+		},		
+		"id_molde": {
+			"match": "\\b(?<=molde|se\\s+passa\\s+por)\\s+[A-Z][a-zA-Z]*(?=\\s+(se|contem)|\\s*(;|\\.))",
+			"name": "entity.name.type.id.molde.btv"
+		},
+		"id": {
+			"match": "\\b[a-z][a-zA-Z]*(?=\\s*(;|\\())",
+			"name": "entity.name.type.id.btv"
 		}
 	}
 }
