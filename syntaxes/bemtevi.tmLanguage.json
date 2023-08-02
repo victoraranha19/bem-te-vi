@@ -4,7 +4,10 @@
 	"scopeName": "source.btv",
 	"patterns": [
 		{
-			"include": "#codigo"
+			"include": "#comentarios"
+		},
+		{
+			"include": "#programa"
 		}
 	],
 	"repository": {
@@ -74,25 +77,6 @@
 				},
 				{
 					"include": "#lista_exp"
-				},
-				{
-					"include": "#id"
-				}
-			]
-		},
-		"codigo": {
-			"patterns": [
-				{
-					"include": "#comentarios"
-				},
-				{
-					"include": "#valor_texto"
-				},
-				{
-					"include": "#valor_numero"
-				},
-				{
-					"include": "#id_molde"
 				},
 				{
 					"include": "#id"
